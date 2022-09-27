@@ -1,0 +1,37 @@
+<h2>Available cloud products</h2>
+
+<ng-container *ngIf="{products: products$ | async, errors: productsErrors$ | async } as productsView">
+
+  <table *ngIf="!productsView.errors && productsView.products as products; else loading">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Unit price</th>
+        <th>Maximum Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.unitPrice | currency:'AUD' }}</td>
+        <td>{{ product.maximumQuantity ? product.maximumQuantity : 'No limit'  }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #loading>
+    <p *ngIf="!productsView.errors">
+      The clouds are on their way.
+    </p>
+  </ng-template>
+
+  <p *ngIf="productsView.errors">
+    The clouds where blown away by some nasty wind! Please try again later.
+  </p>
+
+</ng-container>
+
+
+
